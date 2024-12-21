@@ -1,7 +1,14 @@
 package org.example.project
 
+import DarkColors
+import LightColors
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -15,49 +22,59 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import backgroundColor
 import org.example.project.ui.showHome
 import org.example.project.ui.showResume
 
 @Composable
 fun App() {
-    MaterialTheme {
-        var isHome by remember {
-            mutableStateOf(true)
+    val colors = if (isSystemInDarkTheme()) DarkColors else LightColors
+    MaterialTheme(colors = colors) {
+        var selectedTab by remember {
+            mutableStateOf(0)
+        }
+
+        val tabList = remember {
+            listOf("Home", "About", "Skills", "Work", "Projects", "Extra")
         }
 
         Column(
-            Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize().background(color = backgroundColor),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.size(20.dp))
-            Column(
-                Modifier.size(1000.dp)
+            TabRow(
+                selectedTabIndex = selectedTab,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                TabRow(
-                    selectedTabIndex = if (isHome) 0 else 1,
-                    modifier = Modifier.size(width = 200.dp, height = 40.dp),
-                    backgroundColor = Color.White
-                ) {
-                    Tab(isHome, onClick = {
-                        isHome = true
+
+                tabList.forEachIndexed { index, text ->
+                    Tab(index == selectedTab, onClick = {
+                        selectedTab = index
                     }, text = {
-                        Text("Home")
+                        Text(text = text.uppercase())
                     })
-                    Tab(isHome, onClick = {
-                        isHome = false
-                    }, text = {
-                        Text("Resume")
-                    })
-                }
-                Spacer(modifier = Modifier.size(20.dp))
-                if (isHome) {
-                    showHome()
-                } else {
-                    showResume()
                 }
             }
+            Spacer(modifier = Modifier.size(20.dp))
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                when (selectedTab) {
+                    0 -> showHome()
+                    1 -> showResume()
+                    2 -> showHome()
+                    3 -> showResume()
+                    4 -> showHome()
+                    5 -> showResume()
+                }
+            }
+
+
         }
 
 
