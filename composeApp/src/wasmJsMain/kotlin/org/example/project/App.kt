@@ -3,19 +3,22 @@ package org.example.project
 import DarkColors
 import LightColors
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import backgroundColor
 import org.example.project.ui.showHome
-import org.example.project.ui.showResume
 
 @Composable
 fun App() {
@@ -39,16 +41,22 @@ fun App() {
             listOf("Home", "About", "Skills", "Work", "Projects", "Extra")
         }
 
+        val pagerState = rememberPagerState(pageCount = {
+            6
+        })
+
+        LaunchedEffect(selectedTab) {
+            pagerState.animateScrollToPage(selectedTab)
+        }
+
         Column(
             modifier = Modifier.fillMaxSize().background(color = backgroundColor),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Spacer(Modifier.size(20.dp))
-            TabRow(
-                selectedTabIndex = selectedTab,
-                modifier = Modifier.fillMaxWidth()
-            ) {
 
+            TabRow(selectedTabIndex = selectedTab, modifier = Modifier.fillMaxWidth()) {
                 tabList.forEachIndexed { index, text ->
                     Tab(index == selectedTab, onClick = {
                         selectedTab = index
@@ -57,26 +65,23 @@ fun App() {
                     })
                 }
             }
+
             Spacer(modifier = Modifier.size(20.dp))
 
-            Column(
+            HorizontalPager(
+                state = pagerState,
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                when (selectedTab) {
+                snapPosition = SnapPosition.Center
+            ) { page ->
+                when (page) {
                     0 -> showHome()
-                    1 -> showResume()
+                    1 -> showHome()
                     2 -> showHome()
-                    3 -> showResume()
+                    3 -> showHome()
                     4 -> showHome()
-                    5 -> showResume()
+                    5 -> showHome()
                 }
             }
-
-
         }
-
-
     }
 }
