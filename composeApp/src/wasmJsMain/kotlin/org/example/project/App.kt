@@ -25,9 +25,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import backgroundColor
-import org.example.project.ui.showHome
+import org.example.project.ui.pages.AboutPage
+import org.example.project.ui.pages.HomePage
+import org.example.project.ui.theme.MontFontFamily
 
 @Composable
 fun App() {
@@ -38,11 +42,11 @@ fun App() {
         }
 
         val tabList = remember {
-            listOf("Home", "About", "Skills", "Work", "Projects", "Extra")
+            listOf("Home", "About", "Skills", "Work", "Projects")
         }
 
         val pagerState = rememberPagerState(pageCount = {
-            6
+            5
         })
 
         LaunchedEffect(selectedTab) {
@@ -61,8 +65,13 @@ fun App() {
                     Tab(index == selectedTab, onClick = {
                         selectedTab = index
                     }, text = {
-                        Text(text = text.uppercase())
-                    })
+                        Text(
+                            text = text.uppercase(),
+                            maxLines = 1,
+                            fontSize = 16.sp,
+                            fontFamily = MontFontFamily()
+                        )
+                    }, selectedContentColor = Color.Yellow)
                 }
             }
 
@@ -74,12 +83,11 @@ fun App() {
                 snapPosition = SnapPosition.Center
             ) { page ->
                 when (page) {
-                    0 -> showHome()
-                    1 -> showHome()
-                    2 -> showHome()
-                    3 -> showHome()
-                    4 -> showHome()
-                    5 -> showHome()
+                    0 -> HomePage()
+                    1 -> AboutPage()
+                    2 -> HomePage()
+                    3 -> HomePage()
+                    4 -> HomePage()
                 }
             }
         }
