@@ -38,6 +38,14 @@ kotlin {
         }
         binaries.executable()
     }
+
+    allprojects {
+        repositories {
+            google()
+            mavenCentral()
+            maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
+        }
+    }
     
     sourceSets {
         
@@ -50,6 +58,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.coil)
+            implementation(libs.bundles.ktor.common)
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
     }
 }

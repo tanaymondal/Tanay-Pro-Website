@@ -1,13 +1,12 @@
 package ui.pages
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,10 +20,14 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ui.theme.MontFontFamily
+import coil3.PlatformContext
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
 import tanay_website.composeapp.generated.resources.Res
-import tanay_website.composeapp.generated.resources.mobile_app
+import tanay_website.composeapp.generated.resources.loading
+import ui.theme.MontFontFamily
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -43,14 +46,18 @@ fun AboutPage() {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Image(
-                painter = painterResource(Res.drawable.mobile_app),
-                contentDescription = "",
+            AsyncImage(
+                model = ImageRequest.Builder(PlatformContext.INSTANCE)
+                    .data("https://tanay.pro/images/about/mobile_app.jpg")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
+                placeholder = painterResource(Res.drawable.loading),
                 modifier = Modifier
                     .weight(1f)
                     .size(imageSize.dp)
-                    .clip(RoundedCornerShape(50.dp))
+                    .clip(CircleShape)
             )
 
             Spacer(modifier = Modifier.size(10.dp))

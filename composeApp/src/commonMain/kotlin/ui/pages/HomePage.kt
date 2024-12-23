@@ -1,7 +1,6 @@
 package ui.pages
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -23,13 +25,17 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.PlatformContext
+import coil3.compose.AsyncImagePainter
+import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImageContent
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.theme.MontFontFamily
-import org.jetbrains.compose.resources.painterResource
-import tanay_website.composeapp.generated.resources.Res
-import tanay_website.composeapp.generated.resources.image
 
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HomePage() {
     SelectionContainer {
@@ -61,8 +67,11 @@ fun HomePage() {
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Image(
-                painter = painterResource(Res.drawable.image),
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(PlatformContext.INSTANCE)
+                    .data("https://tanay.pro/images/home/image.jpeg")
+                    .crossfade(true)
+                    .build(),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -73,7 +82,18 @@ fun HomePage() {
                     )
                     .padding(borderWidth)
                     .clip(CircleShape)
-            )
+            ) {
+                val state by painter.state.collectAsState()
+                if (state is AsyncImagePainter.State.Success) {
+                    SubcomposeAsyncImageContent()
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(50.dp),
+                        strokeWidth = 6.dp,
+                        color = Color.White
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.size(10.dp))
 
