@@ -31,11 +31,10 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.theme.MontFontFamily
 
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomePage() {
     SelectionContainer {

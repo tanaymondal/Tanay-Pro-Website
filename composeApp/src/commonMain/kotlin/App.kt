@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
@@ -48,42 +49,60 @@ fun App() {
             pagerState.animateScrollToPage(selectedTab)
         }
 
-        Column(
-            modifier = Modifier.fillMaxSize().background(color = backgroundColor),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Spacer(Modifier.size(20.dp))
+        MainUI(
+            tabList = tabList,
+            selectedTab = selectedTab,
+            pagerState = pagerState,
+            onTabClick = { index ->
+                selectedTab = index
+            })
 
-            TabRow(selectedTabIndex = selectedTab, modifier = Modifier.fillMaxWidth()) {
-                tabList.forEachIndexed { index, text ->
-                    Tab(index == selectedTab, onClick = {
-                        selectedTab = index
-                    }, text = {
-                        Text(
-                            text = text.uppercase(),
-                            maxLines = 1,
-                            fontSize = 16.sp,
-                            fontFamily = MontFontFamily()
-                        )
-                    }, selectedContentColor = Color.Yellow)
-                }
+    }
+}
+
+@Composable
+fun MainUI(
+    tabList: List<String>,
+    selectedTab: Int,
+    pagerState: PagerState,
+    onTabClick: (Int) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().background(color = backgroundColor),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Spacer(Modifier.size(20.dp))
+
+        TabRow(selectedTabIndex = selectedTab, modifier = Modifier.fillMaxWidth()) {
+            tabList.forEachIndexed { index, text ->
+                Tab(index == selectedTab, onClick = {
+
+                    onTabClick(index)
+                }, text = {
+                    Text(
+                        text = text.uppercase(),
+                        maxLines = 1,
+                        fontSize = 16.sp,
+                        fontFamily = MontFontFamily()
+                    )
+                }, selectedContentColor = Color.Yellow)
             }
+        }
 
-            Spacer(modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.size(20.dp))
 
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize(),
-                snapPosition = SnapPosition.Center
-            ) { page ->
-                when (page) {
-                    0 -> HomePage()
-                    1 -> AboutPage()
-                    2 -> HomePage()
-                    3 -> HomePage()
-                    4 -> HomePage()
-                }
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize(),
+            snapPosition = SnapPosition.Center
+        ) { page ->
+            when (page) {
+                0 -> HomePage()
+                1 -> AboutPage()
+                2 -> HomePage()
+                3 -> HomePage()
+                4 -> HomePage()
             }
         }
     }
