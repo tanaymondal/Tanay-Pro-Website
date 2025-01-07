@@ -141,7 +141,7 @@ fun MainUI(
                     uriHandler.openUri(url)
                 },
                 fontFamily = MontFontFamily(),
-                color = if (isHovered) Color.Red else Color.White,
+                color = if (isHovered) Color.Yellow else Color.White,
                 textAlign = TextAlign.Center,
                 fontSize = 12.sp,
                 textDecoration = TextDecoration.Underline
