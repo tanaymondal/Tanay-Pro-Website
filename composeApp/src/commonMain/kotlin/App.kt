@@ -52,7 +52,7 @@ fun App() {
         }
 
         val pagerState = rememberPagerState(pageCount = {
-            5
+            tabList.size
         })
 
         LaunchedEffect(selectedTab) {
