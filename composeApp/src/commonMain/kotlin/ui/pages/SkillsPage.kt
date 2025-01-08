@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,6 +36,7 @@ import tanay_website.composeapp.generated.resources.sql
 import tanay_website.composeapp.generated.resources.webrtc
 import ui.components.ItemsRow
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun SkillsPage() {
 
@@ -41,7 +45,8 @@ fun SkillsPage() {
             Images(
                 name = "Kotlin",
                 image = Res.drawable.kotlin,
-                url = "https://kotlinlang.org/")
+                url = "https://kotlinlang.org/"
+            )
         )
         add(
             Images(
@@ -54,7 +59,8 @@ fun SkillsPage() {
             Images(
                 name = "Dart",
                 image = Res.drawable.dart,
-                url = "https://dart.dev/")
+                url = "https://dart.dev/"
+            )
         )
         add(
             Images(
@@ -91,13 +97,15 @@ fun SkillsPage() {
             Images(
                 name = "Flutter",
                 image = Res.drawable.flutter,
-                url = "https://flutter.dev/")
+                url = "https://flutter.dev/"
+            )
         )
         add(
             Images(
                 name = "Git",
                 image = Res.drawable.git,
-                url = "https://git-scm.com/")
+                url = "https://git-scm.com/"
+            )
         )
         add(
             Images(
@@ -110,18 +118,22 @@ fun SkillsPage() {
             Images(
                 name = "GraphQL",
                 image = Res.drawable.graphql,
-                url = "https://graphql.org/")
+                url = "https://graphql.org/"
+            )
         )
         add(
-            Images(name = "WebRTC",
+            Images(
+                name = "WebRTC",
                 image = Res.drawable.webrtc,
-                url = "https://webrtc.org/")
+                url = "https://webrtc.org/"
+            )
         )
         add(
             Images(
                 name = "Spring",
                 image = Res.drawable.spring,
-                url = "https://spring.io/")
+                url = "https://spring.io/"
+            )
         )
         add(
             Images(
@@ -162,9 +174,17 @@ fun SkillsPage() {
             )
         )
     }
+
+    val size = calculateWindowSizeClass()
+    val padding = when (size.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> 20.dp
+        WindowWidthSizeClass.Medium -> 40.dp
+        else -> 100.dp
+    }
+
     Row {
         Column(
-            modifier = Modifier.fillMaxSize().weight(0.6f).padding(start = 100.dp, end = 100.dp),
+            modifier = Modifier.fillMaxSize().weight(0.6f).padding(start = padding, end = padding),
             verticalArrangement = Arrangement.Center
         ) {
             ItemsRow(sectionTitle = "Programming Languages", list = language)
@@ -174,13 +194,14 @@ fun SkillsPage() {
             ItemsRow(sectionTitle = "Tools and Technology", list = technology)
         }
 
-        Column(
-            modifier = Modifier.fillMaxSize().weight(0.4f),
-            verticalArrangement = Arrangement.Center
-        ) {
-            ItemsRow(boxHeight = 150, list = other)
+        if (size.widthSizeClass != WindowWidthSizeClass.Compact) {
+            Column(
+                modifier = Modifier.fillMaxSize().weight(0.4f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                ItemsRow(boxHeight = 150, list = other)
+            }
         }
-
     }
 
 

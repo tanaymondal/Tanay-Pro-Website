@@ -1,8 +1,8 @@
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 
 
-val LightColors = lightColors(
+val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     secondary = md_theme_light_secondary,
@@ -15,7 +15,7 @@ val LightColors = lightColors(
     onSurface = md_theme_light_onSurface
 )
 
-val DarkColors = darkColors(
+val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     secondary = md_theme_dark_secondary,

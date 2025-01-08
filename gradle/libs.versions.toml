@@ -1,6 +1,6 @@
 [versions]
 androidx-lifecycle = "2.8.4"
-compose-multiplatform = "1.7.0"
+compose-multiplatform = "1.7.3"
 junit = "4.13.2"
 kotlin = "2.1.0"
 coilComposeCore = "3.0.4"
@@ -24,6 +24,8 @@ ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serializati
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-json = { group = "io.ktor", name = "ktor-client-json", version.ref = "ktor" }
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+
+material3-window-size = { group = "org.jetbrains.compose.material3", name = "material3-window-size-class", version.ref = "compose-multiplatform"}
 
 [plugins]
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }

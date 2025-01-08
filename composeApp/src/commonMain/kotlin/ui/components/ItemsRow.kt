@@ -22,7 +22,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import ui.pages.Images
-import ui.theme.MontFontFamily
 
 @Composable
 fun ItemsRow(sectionTitle: String = "", boxHeight: Int = 90, list: MutableList<Images>) {
@@ -54,8 +53,7 @@ fun ItemsRow(sectionTitle: String = "", boxHeight: Int = 90, list: MutableList<I
                 text = (sectionTitle),
                 textAlign = TextAlign.Start,
                 fontSize = 18.sp,
-                color = Color.White,
-                fontFamily = MontFontFamily()
+                color = Color.White
             )
         }
 
@@ -97,7 +95,6 @@ fun ItemsRow(sectionTitle: String = "", boxHeight: Int = 90, list: MutableList<I
                             text = item.name,
                             fontSize = 12.sp,
                             color = Color.White,
-                            fontFamily = MontFontFamily(),
                             modifier = Modifier
                                 .clip(RoundedCornerShape(5.dp))
                                 .background(color = Color(0xFF5B5C5C))

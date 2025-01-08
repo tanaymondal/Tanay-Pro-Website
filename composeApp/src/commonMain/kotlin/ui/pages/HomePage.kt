@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +31,6 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import ui.theme.MontFontFamily
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -60,8 +59,7 @@ fun HomePage() {
                 fontSize = textSize.sp,
                 lineHeight = textSize.sp,
                 color = Color.White,
-                maxLines = 2,
-                fontFamily = MontFontFamily()
+                maxLines = 2
             )
 
             Spacer(modifier = Modifier.size(10.dp))
@@ -102,8 +100,7 @@ fun HomePage() {
                 fontSize = textSize.sp,
                 lineHeight = textSize.sp,
                 color = Color.White,
-                maxLines = 2,
-                fontFamily = MontFontFamily()
+                maxLines = 2
             )
         }
     }

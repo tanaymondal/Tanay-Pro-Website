@@ -16,16 +16,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,12 +38,12 @@ import androidx.compose.ui.unit.sp
 import ui.pages.AboutPage
 import ui.pages.HomePage
 import ui.pages.SkillsPage
-import ui.theme.MontFontFamily
+import ui.theme.MontTypography
 
 @Composable
 fun App() {
     val colors = if (isSystemInDarkTheme()) DarkColors else LightColors
-    MaterialTheme(colors = colors) {
+    MaterialTheme(colorScheme = colors, typography = MontTypography()) {
         var selectedTab by remember {
             mutableStateOf(0)
         }
@@ -59,11 +60,19 @@ fun App() {
             pagerState.animateScrollToPage(selectedTab)
         }
 
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collect { page ->
+                selectedTab = page
+            }
+        }
+
+
         MainUI(
             tabList = tabList,
             selectedTab = selectedTab,
             pagerState = pagerState,
             onTabClick = { index ->
+                //println("Tab Click: $index")
                 selectedTab = index
             })
 
@@ -92,17 +101,20 @@ fun MainUI(
 
         TabRow(selectedTabIndex = selectedTab, modifier = Modifier.fillMaxWidth()) {
             tabList.forEachIndexed { index, text ->
-                Tab(index == selectedTab, onClick = {
-
-                    onTabClick(index)
-                }, text = {
-                    Text(
-                        text = text.uppercase(),
-                        maxLines = 1,
-                        fontSize = 16.sp,
-                        fontFamily = MontFontFamily()
-                    )
-                }, selectedContentColor = Color.Yellow)
+                Tab(
+                    selected = index == selectedTab,
+                    onClick = {
+                        onTabClick(index)
+                    },
+                    text = {
+                        Text(
+                            text = text.uppercase(),
+                            maxLines = 1,
+                            fontSize = 16.sp
+                        )
+                    },
+                    selectedContentColor = Color.Yellow
+                )
             }
         }
 
@@ -120,6 +132,7 @@ fun MainUI(
                 /*3 -> HomePage()
                 4 -> HomePage()*/
             }
+            // println("Page: $page")
         }
 
         Row(
@@ -129,7 +142,6 @@ fun MainUI(
         ) {
             Text(
                 text = "Built using ",
-                fontFamily = MontFontFamily(),
                 color = Color.White,
                 textAlign = TextAlign.Center,
                 fontSize = 12.sp
@@ -140,7 +152,6 @@ fun MainUI(
                     val url = "https://www.jetbrains.com/compose-multiplatform"
                     uriHandler.openUri(url)
                 },
-                fontFamily = MontFontFamily(),
                 color = if (isHovered) Color.Yellow else Color.White,
                 textAlign = TextAlign.Center,
                 fontSize = 12.sp,
